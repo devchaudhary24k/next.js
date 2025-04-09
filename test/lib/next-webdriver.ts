@@ -124,7 +124,9 @@ export default async function webdriver(
     console.warn(
       'Calling `next.browser()` multiple times in a single test is not recommended. use `browser.loadPage()` instead.'
     )
-    await previousBrowser.close()
+    if (!previousBrowser.isClosed()) {
+      await previousBrowser.close()
+    }
     previousBrowser = null
   }
 
@@ -180,7 +182,9 @@ export default async function webdriver(
   previousBrowser = browser
 
   afterCurrentTest(async () => {
-    await browser.close()
+    if (!browser.isClosed()) {
+      await browser.close()
+    }
     if (previousBrowser === browser) {
       previousBrowser = null
     }
