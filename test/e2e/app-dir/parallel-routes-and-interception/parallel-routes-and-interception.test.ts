@@ -821,7 +821,7 @@ describe('parallel-routes-and-interception', () => {
         '3'
       )
 
-      await next.browser('/intercepting-siblings/1')
+      await browser.get(new URL('/intercepting-siblings/1', next.url).href)
 
       await check(() => browser.waitForElementByCss('#main-slot').text(), '1')
     })
